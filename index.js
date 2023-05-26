@@ -7,13 +7,14 @@ require('./db');
  require('./models/user');
 
 const authRoutes= require('./routes/authRoutes');
-
+const  requireToken=  require('./Middlewares/AuthTokenRequired');
 app.use(bodyparser.json());
 app.use(authRoutes);
 
 
-app.get('/',(req,res)=>{
-    res.send('This is home page');    // get request 
+app.get('/',requireToken,(req,res)=>{
+    console.log(req.user);
+    res.send(req.user);    // get request 
 })
 
 // app.post('/signup',(req,res)=>{
